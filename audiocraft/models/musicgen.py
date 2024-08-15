@@ -85,7 +85,7 @@ class MusicGen:
         return self.compression_model.channels
 
     @staticmethod
-    def get_pretrained(name: str = 'GrandaddyShmax/musicgen-melody', device=None):
+    def get_pretrained(name: str = 'GrandaddyShmax/musicgen-melody', device=('cuda' if torch.cuda.is_available() else 'cpu')):
         """Return pretrained model, we provide four models:
         - facebook/musicgen-small (300M), text to music,
           # see: https://huggingface.co/facebook/musicgen-small
@@ -96,11 +96,6 @@ class MusicGen:
         - facebook/musicgen-large (3.3B), text to music,
           # see: https://huggingface.co/facebook/musicgen-large
         """
-        if device is None:
-            if torch.cuda.device_count():
-                device = 'cuda'
-            else:
-                device = 'cpu'
 
         if name == 'debug':
             # used only for unit tests

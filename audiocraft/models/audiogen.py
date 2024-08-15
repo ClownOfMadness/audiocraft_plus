@@ -71,16 +71,11 @@ class AudioGen:
         return self.compression_model.channels
 
     @staticmethod
-    def get_pretrained(name: str = 'facebook/audiogen-medium', device=None):
+    def get_pretrained(name: str = 'facebook/audiogen-medium', device=('cuda' if torch.cuda.is_available() else 'cpu')):
         """Return pretrained model, we provide a single model for now:
         - facebook/audiogen-medium (1.5B), text to sound,
           # see: https://huggingface.co/facebook/audiogen-medium
         """
-        if device is None:
-            if torch.cuda.device_count():
-                device = 'cuda'
-            else:
-                device = 'cpu'
 
         if name == 'debug':
             # used only for unit tests
