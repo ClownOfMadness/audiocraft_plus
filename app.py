@@ -631,7 +631,9 @@ def _do_predictions(gen_type, texts, melodies, sample, trim_start, trim_end, dur
     if UNLOAD_MODEL:
         MODEL = None
     torch.cuda.empty_cache()
-    torch.cuda.ipc_collect()
+    # fix not install cuda driver
+    if torch.cuda.is_available():
+        torch.cuda.ipc_collect()
     return res, res_audio, res_backup, input_length
 
 
